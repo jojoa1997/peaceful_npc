@@ -139,7 +139,7 @@ NPC_ENTITY.on_step = function(self, dtime)
 	self.jump_timer = self.jump_timer + 0.01
 	self.door_timer = self.door_timer + 0.01
 	self.attacking_timer = self.attacking_timer + 0.01
-	self.time_passed = self.time_passed + dtime
+
 	local current_pos = self.object:getpos()
 	local current_node = minetest.env:get_node(current_pos)
 	if self.time_passed == nil then
