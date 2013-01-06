@@ -546,15 +546,12 @@ print("	[Peaceful NPC] spawn stuff loaded!")
 --Npc Fence
 minetest.register_node("peaceful_npc:npc_fence", {
 	description = "NPC Fence",
+	drawtype = "glasslike",
 	tiles = {"peaceful_npc_npc_fence.png"},
 	inventory_image = "peaceful_npc_npc_fence_inv.png",
 	weild_image = "peaceful_npc_npc_fence_inv.png",
 	paramtype = "light",
 	is_ground_content = true,
-	selection_box = {
-		type = "fixed",
-		fixed = {-1/7, -1/2, -1/7, 1/7, 1/2, 1/7},
-	},
 	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
 	sounds = default.node_sound_wood_defaults(),
 })
