@@ -1,3 +1,4 @@
+print("[Peaceful NPC] START")
 --NPC Privilege
 minetest.register_privilege("peacefulnpc", { description = "allows to use spawn command", give_to_singleplayer = false})
 
@@ -365,6 +366,8 @@ end
 
 minetest.register_entity("peaceful_npc:npc", NPC_ENTITY)
 
+print("	[Peaceful NPC] register entity loaded!")
+
 minetest.register_node("peaceful_npc:summoner", {
 	description = "NPC Summoner",
 	image = "peaceful_npc_npc_summoner.png",
@@ -397,13 +400,16 @@ end
 use_mesecons = false
 
 function npc_spawner(pos)
-	local MAX_NPC = 5
-	local found = table.getn(minetest.env:get_objects_inside_radius(pos, 100))
+	local MAX_NPC = 10
+	local found = table.getn(minetest.env:get_objects_inside_radius(pos, 50))
 	if found == nil then
 	found = 0
 
 	if found <= MAX_NPC then
-		minetest.env:add_entity({x=pos.x+math.random(-1,1),y=pos.y+math.random(2,3),z=pos.z+math.random(-1,1)}, ("peaceful_npc:npc"))
+		offsetx = math.random(-3,3)
+		offsety = math.random(2,4)
+		offsetz = math.random(-3,3)
+			minetest.env:add_entity({ x=pos.x+offsetx, y=pos.y+offsety, z=pos.z+offsetz }, ("peaceful_npc:npc"))
 		end
 	end
 end
@@ -508,16 +514,22 @@ local function spawn_for_command(name, param)
 	local npcs_to_spawn = tonumber(param) or 1
 	local player = minetest.env:get_player_by_name(name)
 	local pos = player:getpos()
-	local MAX_SPAWN = 20
-	local active_npc_count = table.getn(minetest.env:get_objects_inside_radius(pos, 100))
+	local max_spawn = 20
+	local max_surround_npc = 30
+	local active_npc_count = table.getn(minetest.env:get_objects_inside_radius(pos, 50))
 	if active_npc_count == nil then
 		active_npc_count = 0
 	end
-	for n = 1, npcs_to_spawn do
-		if npcs_to_spawn <= MAX_SPAWN then
-			minetest.env:add_entity({x=pos.x+math.random(-1,1),y=pos.y+math.random(2,3),z=pos.z+math.random(-1,1)}, ("peaceful_npc:npc"))
-		elseif npcs_to_spawn >= MAX_SPAWN + 1 then
-			minetest.chat_send_player(name, "The spawn limit is 20")
+	if npcs_to_spawn + active_npc_count > max_surround_npc then
+		minetest.chat_send_player(name, "There are too many NPCs around you.")
+	elseif npcs_to_spawn >= max_spawn + 1 then
+		minetest.chat_send_player(name, "The spawn limit is"..max_spawn)
+	else
+		for n = 1, npcs_to_spawn do
+		offsetx = math.random(-5,5)
+		offsety = math.random(2,4)
+		offsetz = math.random(-5,5)
+			minetest.env:add_entity({ x=pos.x+offsetx, y=pos.y+offsety, z=pos.z+offsetz }, ("peaceful_npc:npc"))
 		end
 	end
 end
@@ -528,6 +540,8 @@ minetest.register_chatcommand("summonnpc", {
     privs = {peacefulnpc=true},
     func = spawn_for_command
 })
+
+print("	[Peaceful NPC] spawn stuff loaded!")
 
 --Npc Fence
 minetest.register_node("peaceful_npc:npc_fence", {
