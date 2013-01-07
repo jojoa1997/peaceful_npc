@@ -1,4 +1,3 @@
-print("[Peaceful NPC] START")
 --NPC Privilege
 minetest.register_privilege("peacefulnpc", { description = "allows to use spawn command", give_to_singleplayer = false})
 
@@ -36,7 +35,12 @@ available_npc_textures = {
 	texture_17 = {"gangnam_dude.png", },
 	texture_18 = {"cool_girl.png", },
 	texture_19 = {"warrior_panda.png", },
-	texture_20 = {"penguin_knight.png", }
+	texture_20 = {"penguin_knight.png", },
+	texture_21 = {"dragon.png", },
+	texture_22 = {"kitty.png", },
+	texture_23 = {"charmander.png", },
+	texture_24 = {"squirtle.png", },
+	texture_25 = {"pickachu.png", }
 }
 
 
@@ -79,7 +83,7 @@ function npc_update_visuals(self)
 	prop = {
 		mesh = default_model,
 		textures = default_textures,
-		textures = available_npc_textures["texture_"..math.random(1,20)],
+		textures = available_npc_textures["texture_"..math.random(1,25)],
 		visual_size = {x=1, y=1},
 	}
 	self.object:set_properties(prop)
@@ -366,8 +370,6 @@ end
 
 minetest.register_entity("peaceful_npc:npc", NPC_ENTITY)
 
-print("	[Peaceful NPC] register entity loaded!")
-
 minetest.register_node("peaceful_npc:summoner", {
 	description = "NPC Summoner",
 	image = "peaceful_npc_npc_summoner.png",
@@ -541,8 +543,6 @@ minetest.register_chatcommand("summonnpc", {
     func = spawn_for_command
 })
 
-print("	[Peaceful NPC] spawn stuff loaded!")
-
 --Npc Fence
 minetest.register_node("peaceful_npc:npc_fence", {
 	description = "NPC Fence",
@@ -614,4 +614,9 @@ minetest.register_craft({
 	}
 })
 
-print("[Peaceful NPC] loaded! By jojoa1997 :-)")
+--Aliases
+minetest.register_alias("npc_spawner", "peaceful_npc:npc_spawner")
+minetest.register_alias("npc_summoner", "peaceful_npc:summoner")
+minetest.register_alias("npc_fence", "peaceful_npc:npc_fence")
+
+print("Peaceful NPC loaded! By jojoa1997!")
