@@ -40,7 +40,7 @@ available_npc_textures = {
 	texture_22 = {"kitty.png", },
 	texture_23 = {"charmander.png", },
 	texture_24 = {"squirtle.png", },
-	texture_25 = {"pickachu.png", }
+	texture_25 = {"pikachu.png", }
 }
 
 
