@@ -458,7 +458,7 @@ npcs.spawning_mobs = {}
 		minetest.register_abm({
 		nodenames = nodes,
 		neighbors = nodes,
-		interval = 240,
+		interval = 60,
 		chance = chance,
 		action = function(pos, node)
 			if not npcs.spawning_mobs[name] then
@@ -509,7 +509,7 @@ npcs.spawning_mobs = {}
 	})
 end
 
-npcs:register_spawn("peaceful_npc:npc", {"default:dirt_with_grass", "default:sand", "default:desert_sand", "default:desert_stone", "default:stone"}, 16, -1, 500, 2, 31000)
+npcs:register_spawn("peaceful_npc:npc", {"default:dirt_with_grass", "default:sand", "default:desert_sand", "default:desert_stone", "default:stone"}, 16, -1, 10, 6, 31000)
 
 --Spawn Command Function
 local function spawn_for_command(name, param)
