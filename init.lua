@@ -1,5 +1,5 @@
 --NPC Privilege
-minetest.register_privilege("peacefulnpc", { description = "allows to use spawn command", give_to_singleplayer = false})
+minetest.register_privilege("peacefulnpc", { description = "allows to use spawn command", give_to_singleplayer = true})
 
 -- NPC max walk speed
 walk_limit = 2
