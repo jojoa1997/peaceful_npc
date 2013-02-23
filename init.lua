@@ -1,11 +1,6 @@
 --NPC Privilege
 minetest.register_privilege("peacefulnpc", { description = "allows to use spawn command", give_to_singleplayer = true})
 
---
---Config Begin
---
-local autospawn_int = 60
-local autospawn_chance = 5
 -- NPC max walk speed
 walk_limit = 2
 --npc just walking around
@@ -406,24 +401,56 @@ minetest.register_node("peaceful_npc:summoner", {
 end
 })
 
-minetest.register_node("peaceful_npc:npc_spawner", {
-	description = "NPC Portal",
-	drawtype = "glasslike",
-	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3,wood=1},
-	sounds = default.node_sound_glass_defaults(),
-	tiles = {"peaceful_npc_spawner.png"},
-	sunlight_propagates = true,
-	paramtype = "light",
-})
+use_mesecons = false
 
-minetest.register_abm({
-	nodenames = {"peaceful_npc:npc_spawner"},
-	interval = autospawn_int,
-	chance = autospawn_chance,
-	action = function(pos)
-		npc_spawner(pos)
-	end,
-})
+function npc_spawner(pos)
+	local MAX_NPC = 10
+	local found = table.getn(minetest.env:get_objects_inside_radius(pos, 50))
+	if found == nil then
+	found = 0
+
+	if found <= MAX_NPC then
+		offsetx = math.random(-3,3)
+		offsety = math.random(2,4)
+		offsetz = math.random(-3,3)
+			minetest.env:add_entity({ x=pos.x+offsetx, y=pos.y+offsety, z=pos.z+offsetz }, ("peaceful_npc:npc"))
+		end
+	end
+end
+
+if use_mesecons == true then
+	minetest.register_node("peaceful_npc:npc_spawner", {
+		description = "NPC Portal",
+		drawtype = "glasslike",
+		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3,wood=1},
+		sounds = default.node_sound_glass_defaults(),
+		tiles = {"peaceful_npc_spawner.png"},
+		sunlight_propagates = true,
+		paramtype = "light",
+		mesecons = {effector = {
+			action_on = npc_spawner
+		}}
+	})
+end
+if use_mesecons == false then
+	minetest.register_node("peaceful_npc:npc_spawner", {
+		description = "NPC Portal",
+		drawtype = "glasslike",
+		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3,wood=1},
+		sounds = default.node_sound_glass_defaults(),
+		tiles = {"peaceful_npc_spawner.png"},
+		sunlight_propagates = true,
+		paramtype = "light",
+	})
+	minetest.register_abm({
+		nodenames = {"peaceful_npc:npc_spawner"},
+		interval = 60.0,
+		chance = 5,
+		action = function(pos)
+			npc_spawner(pos)
+		end,
+	})
+end
 
 
 --use pilzadam's spawning algo
