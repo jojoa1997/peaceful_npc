@@ -461,7 +461,7 @@ npcs.spawning_mobs = {}
 		minetest.register_abm({
 		nodenames = nodes,
 		neighbors = nodes,
-		interval = 120,
+		interval = 20,
 		chance = chance,
 		action = function(pos, node)
 			if not npcs.spawning_mobs[name] then
