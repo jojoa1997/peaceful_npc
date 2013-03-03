@@ -456,7 +456,7 @@ end
 --use pilzadam's spawning algo
 npcs = {}
 npcs.spawning_mobs = {}
-	function npcs:register_spawn(name, nodes, max_light, min_light, chance, mobs_per_100_block_radius, max_height)
+	function npcs:register_spawn(name, nodes, max_light, min_light, chance, mobs_per_20_block_radius, max_height)
 		npcs.spawning_mobs[name] = true
 		minetest.register_abm({
 		nodenames = nodes,
@@ -489,18 +489,18 @@ npcs.spawning_mobs = {}
 			end
 
 			local count = 0
-			if mobs_per_100_block_radius == nil then
-				mobs_per_100_block_radius = 0
+			if mobs_per_20_block_radius == nil then
+				mobs_per_20_block_radius = 0
 			end
 
-			for _,obj in pairs(minetest.env:get_objects_inside_radius(pos, 100)) do
+			for _,obj in pairs(minetest.env:get_objects_inside_radius(pos, 20)) do
 				if obj:is_player() then
 					return
 		         elseif obj:get_luaentity() and obj:get_luaentity().name == name then
 					count = count+1
 				end
 			end
-			if count > mobs_per_100_block_radius then
+			if count > mobs_per_20_block_radius then
 				return
 			end
 
@@ -512,7 +512,7 @@ npcs.spawning_mobs = {}
 	})
 end
 
-npcs:register_spawn("peaceful_npc:npc", {"default:dirt_with_grass", "default:sand", "default:desert_sand", "default:desert_stone", "default:stone"}, 16, -1, 20, 4, 31000)
+npcs:register_spawn("peaceful_npc:npc", {"default:dirt_with_grass", "default:sand", "default:desert_sand", "default:desert_stone", "default:stone"}, 16, -1, 15, 4, 31000)
 
 --Spawn Command Function
 local function spawn_for_command(name, param)
