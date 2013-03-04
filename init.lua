@@ -404,8 +404,8 @@ end
 use_mesecons = false
 
 function npc_spawner(pos)
-	local MAX_NPC = 10
-	local found = table.getn(minetest.env:get_objects_inside_radius(pos, 50))
+	local MAX_NPC = 2
+	local found = table.getn(minetest.env:get_objects_inside_radius(pos, 10))
 	if found == nil then
 	found = 0
 
@@ -445,7 +445,7 @@ if use_mesecons == false then
 	minetest.register_abm({
 		nodenames = {"peaceful_npc:npc_spawner"},
 		interval = 60.0,
-		chance = 5,
+		chance = 1,
 		action = function(pos)
 			npc_spawner(pos)
 		end,
@@ -456,12 +456,12 @@ end
 --use pilzadam's spawning algo
 npcs = {}
 npcs.spawning_mobs = {}
-	function npcs:register_spawn(name, nodes, max_light, min_light, chance, mobs_per_20_block_radius, max_height)
+	function npcs:register_spawn(name, nodes, max_light, min_light, chance, mobs_per_50_block_radius, max_height)
 		npcs.spawning_mobs[name] = true
 		minetest.register_abm({
 		nodenames = nodes,
 		neighbors = nodes,
-		interval = 20,
+		interval = 60,
 		chance = chance,
 		action = function(pos, node)
 			if not npcs.spawning_mobs[name] then
@@ -489,18 +489,18 @@ npcs.spawning_mobs = {}
 			end
 
 			local count = 0
-			if mobs_per_20_block_radius == nil then
-				mobs_per_20_block_radius = 0
+			if mobs_per_50_block_radius == nil then
+				mobs_per_50_block_radius = 0
 			end
 
-			for _,obj in pairs(minetest.env:get_objects_inside_radius(pos, 20)) do
+			for _,obj in pairs(minetest.env:get_objects_inside_radius(pos, 50)) do
 				if obj:is_player() then
 					return
 		         elseif obj:get_luaentity() and obj:get_luaentity().name == name then
 					count = count+1
 				end
 			end
-			if count > mobs_per_20_block_radius then
+			if count > mobs_per_50_block_radius then
 				return
 			end
 
