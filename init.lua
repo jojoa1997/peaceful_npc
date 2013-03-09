@@ -1,6 +1,6 @@
 --Loads other files
 dofile(minetest.get_modpath("peaceful_npc").."/npc/npc_def.lua")
---dofile(minetest.get_modpath("peaceful_npc").."/npc/npc_fast.lua")
+dofile(minetest.get_modpath("peaceful_npc").."/npc/npc_fast.lua")
 --dofile(minetest.get_modpath("peaceful_npc").."/commands.lua")
 dofile(minetest.get_modpath("peaceful_npc").."/items.lua")
 --dofile(minetest.get_modpath("peaceful_npc").."/spawning.lua")

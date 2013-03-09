@@ -11,12 +11,12 @@ animation_blend = 0
 
 -- Default player appearance
 default_model = "character.x"
-available_npc_textures = {
-	texture_1 = {"diamond_ninja.png"},
-	texture_2 = {"tron.png"},
-	texture_3 = {"ninja.png"},
-	texture_4 = {"hunter.png"},
-	texture_5 = {"dragon.png"}
+available_npc_textures_fast = {
+	fast_texture_1 = {"diamond_ninja.png"},
+	fast_texture_2 = {"tron.png"},
+	fast_texture_3 = {"ninja.png"},
+	fast_texture_4 = {"hunter.png"},
+	fast_texture_5 = {"dragon.png"}
 }
 
 --
@@ -24,7 +24,7 @@ available_npc_textures = {
 --
 
 -- Frame ranges for each player model
-function npc_get_animations(model)
+function npc_get_animations_fast(model)
 	if model == "character.x" then
 		return {
 		stand_START = 0,
@@ -53,7 +53,7 @@ local ANIM_WALK  = 4
 local ANIM_WALK_MINE = 5
 local ANIM_MINE = 6
 
-function npc_update_visuals(self)
+function npc_update_visuals_fast(self)
 	--local name = get_player_name()
 	visual = default_model
 	npc_anim = 0 -- Animation will be set further below immediately
@@ -61,15 +61,15 @@ function npc_update_visuals(self)
 	prop = {
 		mesh = default_model,
 		textures = default_textures,
-		textures = available_npc_textures["texture_"..math.random(1,5)],
-		visual_size = {x=1, y=1},
+		textures = available_npc_textures_fast["fast_texture_"..math.random(1,5)],
+		visual_size = {x=.75, y=.75, z=.75},
 	}
 	self.object:set_properties(prop)
 end
 
-NPC_ENTITY = {
+NPC_ENTITY_FAST = {
 	physical = true,
-	collisionbox = {-0.3,-1.0,-0.3, 0.3,0.8,0.3},
+	collisionbox = {-0.3,-0.8,-0.3, 0.3,0.8,0.3},
 	visual = "mesh",
 	mesh = "character.x",
 	textures = {"character.png"},
@@ -86,17 +86,17 @@ NPC_ENTITY = {
 	attacking_timer = 0
 }
 
-NPC_ENTITY.on_activate = function(self)
-	npc_update_visuals(self)
-	self.anim = npc_get_animations(visual)
+NPC_ENTITY_FAST.on_activate = function(self)
+	npc_update_visuals_fast(self)
+	self.anim = npc_get_animations_fast(visual)
 	self.object:set_animation({x=self.anim.stand_START,y=self.anim.stand_END}, animation_speed_mod, animation_blend)
 	self.npc_anim = ANIM_STAND
 	self.object:setacceleration({x=0,y=-10,z=0})
 	self.state = 1
-	self.object:set_hp(50)
+	self.object:set_hp(40)
 end
 
-NPC_ENTITY.on_punch = function(self, puncher)
+NPC_ENTITY_FAST.on_punch = function(self, puncher)
 	for  _,object in ipairs(minetest.env:get_objects_inside_radius(self.object:getpos(), 5)) do
 		if not object:is_player() then
 			if object:get_luaentity().name == "peaceful_npc:npc_fast" then
@@ -112,11 +112,11 @@ NPC_ENTITY.on_punch = function(self, puncher)
 	end
 
 	if self.object:get_hp() == 0 then
-	    local obj = minetest.env:add_item(self.object:getpos(), "default:mese 2")
+	    local obj = minetest.env:add_item(self.object:getpos(), "default:steelblock")
 	end
 end
 
-NPC_ENTITY.on_step = function(self, dtime)
+NPC_ENTITY_FAST.on_step = function(self, dtime)
 	self.timer = self.timer + 0.01
 	self.turn_timer = self.turn_timer + 0.01
 	self.jump_timer = self.jump_timer + 0.01
@@ -131,7 +131,7 @@ NPC_ENTITY.on_step = function(self, dtime)
 
 	self.time_passed = self.time_passed + dtime
 
-	if self.time_passed >= 5 then
+	if self.time_passed >= 15 then
 		self.object:remove()
 	else
 	if current_node.name == "default:water_source" or
@@ -202,7 +202,7 @@ end
 		end
 		self.object:setvelocity({x=0,y=self.object:getvelocity().y,z=0})
 		if self.npc_anim ~= ANIM_STAND then
-			self.anim = npc_get_animations(visual)
+			self.anim = npc_get_animations_def(visual)
 			self.object:set_animation({x=self.anim.stand_START,y=self.anim.stand_END}, animation_speed_mod, animation_blend)
 			self.npc_anim = ANIM_STAND
 		end
@@ -225,7 +225,7 @@ end
 			--self.object:setacceleration(self.direction)
 		end
 		if self.npc_anim ~= ANIM_WALK then
-			self.anim = npc_get_animations(visual)
+			self.anim = npc_get_animations_fast(visual)
 			self.object:set_animation({x=self.anim.walk_START,y=self.anim.walk_END}, animation_speed_mod, animation_blend)
 			self.npc_anim = ANIM_WALK
 		end
@@ -346,5 +346,5 @@ end
 	end
 end
 
-minetest.register_entity("peaceful_npc:npc_fast", NPC_ENTITY)
+minetest.register_entity("peaceful_npc:npc_fast", NPC_ENTITY_FAST)
 

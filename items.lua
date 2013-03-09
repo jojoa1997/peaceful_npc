@@ -63,7 +63,7 @@ minetest.register_abm({
 })
 
 --Item Code for fast npcs
---[[minetest.register_node("peaceful_npc:summoner_npc_fast", {
+minetest.register_node("peaceful_npc:summoner_npc_fast", {
 	description = "Fast NPC Summoner",
 	image = "peaceful_npc_npc_summoner_fast.png",
 	inventory_image = "peaceful_npc_npc_summoner_fast.png",
@@ -111,6 +111,6 @@ minetest.register_abm({
 	action = function(pos)
 		npc_spawner(pos, "peaceful_npc:npc_fast")
 	end,
-})]]
+})
 
 print("Peaceful NPC items.lua loaded! By jojoa1997!")

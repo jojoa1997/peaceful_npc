@@ -10,13 +10,13 @@ animation_speed = 30
 animation_blend = 0
 
 -- Default player appearance
-default_model = "character.x"
-available_npc_textures = {
-	texture_1 = {"miner.png"},
-	texture_2 = {"archer.png"},
-	texture_3 = {"cool_girl.png"},
-	texture_4 = {"builder.png"},
-	texture_5 = {"panda_girl.png"}
+default_model_def = "character.x"
+available_npc_textures_def = {
+	def_texture_1 = {"miner.png"},
+	def_texture_2 = {"archer.png"},
+	def_texture_3 = {"cool_girl.png"},
+	def_texture_4 = {"builder.png"},
+	def_texture_5 = {"panda_girl.png"}
 }
 
 --
@@ -24,7 +24,7 @@ available_npc_textures = {
 --
 
 -- Frame ranges for each player model
-function npc_get_animations(model)
+function npc_get_animations_def(model)
 	if model == "character.x" then
 		return {
 		stand_START = 0,
@@ -53,21 +53,21 @@ local ANIM_WALK  = 4
 local ANIM_WALK_MINE = 5
 local ANIM_MINE = 6
 
-function npc_update_visuals(self)
+function npc_update_visuals_def(self)
 	--local name = get_player_name()
-	visual = default_model
+	visual = default_model_def
 	npc_anim = 0 -- Animation will be set further below immediately
 	--npc_sneak[name] = false
 	prop = {
-		mesh = default_model,
+		mesh = default_model_def,
 		textures = default_textures,
-		textures = available_npc_textures["texture_"..math.random(1,5)],
-		visual_size = {x=1, y=1},
+		textures = available_npc_textures_def["def_texture_"..math.random(1,5)],
+		visual_size = {x=1, y=1, z=1},
 	}
 	self.object:set_properties(prop)
 end
 
-NPC_ENTITY = {
+NPC_ENTITY_DEF = {
 	physical = true,
 	collisionbox = {-0.3,-1.0,-0.3, 0.3,0.8,0.3},
 	visual = "mesh",
@@ -86,9 +86,9 @@ NPC_ENTITY = {
 	attacking_timer = 0
 }
 
-NPC_ENTITY.on_activate = function(self)
-	npc_update_visuals(self)
-	self.anim = npc_get_animations(visual)
+NPC_ENTITY_DEF.on_activate = function(self)
+	npc_update_visuals_def(self)
+	self.anim = npc_get_animations_def(visual)
 	self.object:set_animation({x=self.anim.stand_START,y=self.anim.stand_END}, animation_speed_mod, animation_blend)
 	self.npc_anim = ANIM_STAND
 	self.object:setacceleration({x=0,y=-10,z=0})
@@ -96,7 +96,7 @@ NPC_ENTITY.on_activate = function(self)
 	self.object:set_hp(50)
 end
 
-NPC_ENTITY.on_punch = function(self, puncher)
+NPC_ENTITY_DEF.on_punch = function(self, puncher)
 	for  _,object in ipairs(minetest.env:get_objects_inside_radius(self.object:getpos(), 5)) do
 		if not object:is_player() then
 			if object:get_luaentity().name == "peaceful_npc:npc_def" then
@@ -116,7 +116,7 @@ NPC_ENTITY.on_punch = function(self, puncher)
 	end
 end
 
-NPC_ENTITY.on_step = function(self, dtime)
+NPC_ENTITY_DEF.on_step = function(self, dtime)
 	self.timer = self.timer + 0.01
 	self.turn_timer = self.turn_timer + 0.01
 	self.jump_timer = self.jump_timer + 0.01
@@ -202,7 +202,7 @@ end
 		end
 		self.object:setvelocity({x=0,y=self.object:getvelocity().y,z=0})
 		if self.npc_anim ~= ANIM_STAND then
-			self.anim = npc_get_animations(visual)
+			self.anim = npc_get_animations_def(visual)
 			self.object:set_animation({x=self.anim.stand_START,y=self.anim.stand_END}, animation_speed_mod, animation_blend)
 			self.npc_anim = ANIM_STAND
 		end
@@ -225,7 +225,7 @@ end
 			--self.object:setacceleration(self.direction)
 		end
 		if self.npc_anim ~= ANIM_WALK then
-			self.anim = npc_get_animations(visual)
+			self.anim = npc_get_animations_def(visual)
 			self.object:set_animation({x=self.anim.walk_START,y=self.anim.walk_END}, animation_speed_mod, animation_blend)
 			self.npc_anim = ANIM_WALK
 		end
@@ -346,4 +346,4 @@ end
 	end
 end
 
-minetest.register_entity("peaceful_npc:npc_def", NPC_ENTITY)
+minetest.register_entity("peaceful_npc:npc_def", NPC_ENTITY_DEF)
