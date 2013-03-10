@@ -1,28 +1,52 @@
 --Spawn function
 function def_spawn(pos)
 	minetest.env:add_entity(pos, "peaceful_npc:npc_def")
-	minetest.chat_send_all("want to spawn npc_def at "..dump(pos))
+	print("want to spawn npc_def at "..dump(pos))
+	if mode_debug == true then
+		minetest.chat_send_all("want to spawn npc_def at "..dump(pos))
+	end
 end
 
 function fast_spawn(pos)
 	minetest.env:add_entity(pos, "peaceful_npc:npc_fast")
-	minetest.chat_send_all("want to spawn npc_fast at "..dump(pos))
+	print("want to spawn npc_fast at "..dump(pos))
+	if mode_debug == true then
+		minetest.chat_send_all("want to spawn npc_fast at "..dump(pos))
+	end
 end
 
---biomes
-def_biome = {
+function dwarf_spawn(pos)
+	minetest.env:add_entity(pos, "peaceful_npc:npc_dwarf")
+	print("want to spawn npc_dwarf at "..dump(pos))
+	if mode_debug == true then
+		minetest.chat_send_all("want to spawn npc_dwarf at "..dump(pos))
+	end
+end
+
+--Mapgen biomes
+plaingen_biome = {
 	surface = "default:dirt_with_grass",
-	avoid_nodes = { "default:water_source", "default:water_flowing"},
-	avoid_radius = 5,
-	rarity = 95,
+	avoid_nodes = {"group:liquid", "group:tree"},
+	avoid_radius = 20,
+	rarity = 93,
 	max_count = 1,
 	min_elevation = -10,
 	max_elevation = 30,
 }
 
-beach_biome = {
+forestgen_biome = {
+	surface = {"group:tree", "default:leaves"},
+	avoid_nodes = {"group:liquid"},
+	avoid_radius = 10,
+	rarity = 96,
+	max_count = 1,
+	min_elevation = 20,
+	max_elevation = 50,
+}
+
+beachgen_biome = {
 	surface = "default:sand",
-	avoid_nodes = { "default:water_source", "default:water_flowing"},
+	avoid_nodes = {"group:liquid"},
 	avoid_radius = 1,
 	rarity = 90,
 	max_count = 1,
@@ -30,20 +54,33 @@ beach_biome = {
 	max_elevation = 10,
 }
 
-desert_biome = {
+desertgen_biome = {
 	surface = { "default:desert_sand", "default:desert_stone"},
-	avoid_nodes = { "default:water_source", "default:water_flowing"},
-	avoid_radius = 3,
-	rarity = 50,
+	avoid_nodes = {"group:liquid"},
+	avoid_radius = 100,
+	rarity = 95,
 	max_count = 1,
 	min_elevation = 0,
-	max_elevation = 100,
+	max_elevation = 150,
+}
+
+cavegen_biome = {
+	surface = { "default:stone_with_iron", "default:stone_with_coal", "default:stone_with_mese"},
+	avoid_nodes = {"group:liquid"},
+	avoid_radius = 5,
+	rarity = 98,
+	max_count = 1,
+	min_elevation = -500,
+	max_elevation = -50,
+	check_air = true,
+	spawn_replace_node = true,
 }
 	
---spawn def
-plantslib:register_generate_plant(def_biome, "def_spawn")
-plantslib:register_generate_plant(beach_biome, "fast_spawn")
-plantslib:register_generate_plant(desert_biome, "fast_spawn")
-
+--spawn definers
+plantslib:register_generate_plant(plaingen_biome, "def_spawn")
+plantslib:register_generate_plant(forestgen_biome, "def_spawn")
+plantslib:register_generate_plant(beachgen_biome, "fast_spawn")
+plantslib:register_generate_plant(desertgen_biome, "fast_spawn")
+plantslib:register_generate_plant(cavegen_biome, "dwarf_spawn")
 
 print("Peaceful NPC spawning.lua loaded! By jojoa1997!")
