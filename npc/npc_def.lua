@@ -19,10 +19,6 @@ available_npc_textures_def = {
 	def_texture_5 = {"panda_girl.png"}
 }
 
---
---Config End
---
-
 -- Frame ranges for each player model
 function npc_get_animations_def(model)
 	if model == "character.x" then
@@ -256,7 +252,7 @@ end
 	--WANDERING CONSTANTLY AT NIGHT
 	if self.state == 4 then
 		if self.npc_anim ~= ANIM_WALK then
-			self.anim = npc_get_animations(visual)
+			self.anim = npc_get_animations_def(visual)
 			self.object:set_animation({x=self.anim.walk_START,y=self.anim.walk_END}, animation_speed_mod, animation_blend)
 			self.npc_anim = ANIM_WALK
 		end
@@ -313,7 +309,7 @@ end
 			self.direction = {x = math.sin(self.yaw)*-1, y = -10, z = math.cos(self.yaw)}
 		end
 		if self.npc_anim ~= ANIM_WALK then
-			self.anim = npc_get_animations(visual)
+			self.anim = npc_get_animations_def(visual)
 			self.object:set_animation({x=self.anim.walk_START,y=self.anim.walk_END}, animation_speed_mod, animation_blend)
 			self.npc_anim = ANIM_WALK
 		end

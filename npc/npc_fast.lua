@@ -19,10 +19,6 @@ available_npc_textures_fast = {
 	fast_texture_5 = {"dragon.png"}
 }
 
---
---Config End
---
-
 -- Frame ranges for each player model
 function npc_get_animations_fast(model)
 	if model == "character.x" then
@@ -69,7 +65,7 @@ end
 
 NPC_ENTITY_FAST = {
 	physical = true,
-	collisionbox = {-0.3,-0.8,-0.3, 0.3,0.8,0.3},
+	collisionbox = {-0.225,-0.75-0.225, 0.225,0.6,0.225},
 	visual = "mesh",
 	mesh = "character.x",
 	textures = {"character.png"},
@@ -256,7 +252,7 @@ end
 	--WANDERING CONSTANTLY AT NIGHT
 	if self.state == 4 then
 		if self.npc_anim ~= ANIM_WALK then
-			self.anim = npc_get_animations(visual)
+			self.anim = npc_get_animations_fast(visual)
 			self.object:set_animation({x=self.anim.walk_START,y=self.anim.walk_END}, animation_speed_mod, animation_blend)
 			self.npc_anim = ANIM_WALK
 		end
@@ -313,7 +309,7 @@ end
 			self.direction = {x = math.sin(self.yaw)*-1, y = -10, z = math.cos(self.yaw)}
 		end
 		if self.npc_anim ~= ANIM_WALK then
-			self.anim = npc_get_animations(visual)
+			self.anim = npc_get_animations_fast(visual)
 			self.object:set_animation({x=self.anim.walk_START,y=self.anim.walk_END}, animation_speed_mod, animation_blend)
 			self.npc_anim = ANIM_WALK
 		end
