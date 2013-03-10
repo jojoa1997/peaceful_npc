@@ -164,4 +164,21 @@ minetest.register_abm({
 	end,
 })
 
+if instakill_sword == true then
+	--Adds instakill sword
+	minetest.register_tool("peaceful_npc:sword_instakill", {
+		description = "Instakill Sword",
+		inventory_image = "default_tool_steelsword.png",
+		tool_capabilities = {
+			full_punch_interval = 0.1,
+			max_drop_level = 1,
+			groupcaps={
+				fleshy={times={[1]=0.005, [2]=0.005, [3]=0.005}, uses=0, maxlevel=3},
+				snappy={times={[2]=0.005, [3]=0.005}, uses=0, maxlevel=2},
+				choppy={times={[3]=0.005}, uses=0, maxlevel=1}
+			},
+		}
+	})
+end
+
 print("Peaceful NPC items.lua loaded! By jojoa1997!")
