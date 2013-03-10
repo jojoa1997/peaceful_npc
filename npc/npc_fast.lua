@@ -65,7 +65,7 @@ end
 
 NPC_ENTITY_FAST = {
 	physical = true,
-	collisionbox = {-0.225,-0.75-0.225, 0.225,0.6,0.225},
+	collisionbox = {-0.3,-0.8,-0.3, 0.3,0.6,0.3},
 	visual = "mesh",
 	mesh = "character.x",
 	textures = {"character.png"},
@@ -108,7 +108,7 @@ NPC_ENTITY_FAST.on_punch = function(self, puncher)
 	end
 
 	if self.object:get_hp() == 0 then
-	    local obj = minetest.env:add_item(self.object:getpos(), "default:steelblock")
+	    local obj = minetest.env:add_item(self.object:getpos(), "default:stone_with_coal 5")
 	end
 end
 
@@ -130,10 +130,7 @@ NPC_ENTITY_FAST.on_step = function(self, dtime)
 	if self.time_passed >= 15 then
 		self.object:remove()
 	else
-	if current_node.name == "default:water_source" or
-		current_node.name == "default:water_flowing" or
-		current_node.name == "default:lava_source" or
-		current_node.name == "default:lava_flowing"
+	if current_node.name == "group:liquid"
 	then
 		self.time_passed =  self.time_passed + dtime
 	else

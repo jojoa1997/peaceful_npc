@@ -64,6 +64,7 @@ end
 
 NPC_ENTITY_DWARF = {
 	physical = true,
+	lightsource = 5,
 	collisionbox = {-0.15,-0.5,-0.15, 0.15,0.4,0.15},
 	visual = "mesh",
 	mesh = "character.x",
@@ -107,7 +108,7 @@ NPC_ENTITY_DWARF.on_punch = function(self, puncher)
 	end
 
 	if self.object:get_hp() == 0 then
-	    local obj = minetest.env:add_item(self.object:getpos(), {"default:stone_with_mese", "default:stone_with_coal", "default:stone_with_iron"})
+	    local obj = minetest.env:add_item(self.object:getpos(), "default:stone_with_mese 12")
 	end
 end
 
@@ -129,10 +130,7 @@ NPC_ENTITY_DWARF.on_step = function(self, dtime)
 	if self.time_passed >= 15 then
 		self.object:remove()
 	else
-	if current_node.name == "default:water_source" or
-		current_node.name == "default:water_flowing" or
-		current_node.name == "default:lava_source" or
-		current_node.name == "default:lava_flowing"
+	if current_node.name == "group:liquid"
 	then
 		self.time_passed =  self.time_passed + dtime
 	else

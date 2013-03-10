@@ -108,7 +108,7 @@ NPC_ENTITY_DEF.on_punch = function(self, puncher)
 	end
 
 	if self.object:get_hp() == 0 then
-	    local obj = minetest.env:add_item(self.object:getpos(), "default:mese")
+	    local obj = minetest.env:add_item(self.object:getpos(), "default:stone_with_iron 10")
 	end
 end
 
@@ -130,10 +130,7 @@ NPC_ENTITY_DEF.on_step = function(self, dtime)
 	if self.time_passed >= 5 then
 		self.object:remove()
 	else
-	if current_node.name == "default:water_source" or
-		current_node.name == "default:water_flowing" or
-		current_node.name == "default:lava_source" or
-		current_node.name == "default:lava_flowing"
+	if current_node.name == "group:liquid"
 	then
 		self.time_passed =  self.time_passed + dtime
 	else
