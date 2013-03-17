@@ -1,5 +1,5 @@
 --Config
-instakill_sword = true
+instakill_sword = false
 mode_debug = false
 
 --Loads other files
