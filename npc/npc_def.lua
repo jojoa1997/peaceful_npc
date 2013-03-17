@@ -331,7 +331,7 @@ end
 			if self.jump_timer > 0.3 then
 				--print(dump(minetest.env:get_node({x=self.object:getpos().x + self.direction.x,y=self.object:getpos().y-1,z=self.object:getpos().z + self.direction.z})))
 				if minetest.env:get_node({x=self.object:getpos().x + self.direction.x,y=self.object:getpos().y-1,z=self.object:getpos().z + self.direction.z}).name ~= "air" then
-					self.object:setvelocity({x=self.object:getvelocity().x,y=5,z=self.object:getvelocity().z})
+					self.object:setvelocity({x=self.object:getvelocity().x,y=2.5,z=self.object:getvelocity().z})
 					self.jump_timer = 0
 				end
 			end
