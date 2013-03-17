@@ -1,6 +1,6 @@
 --Spawn code
 function npc_spawner(pos, SPAWN_TYPE)
-	local MAX_NPC = 15
+	local MAX_NPC = 5
 	local count = table.getn(minetest.env:get_objects_inside_radius(pos, 50))
 	if count == nil then
 		count = 0
