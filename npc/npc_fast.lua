@@ -130,7 +130,10 @@ NPC_ENTITY_FAST.on_step = function(self, dtime)
 	if self.time_passed >= 15 then
 		self.object:remove()
 	else
-	if current_node.name == "group:liquid"
+	if current_node.name == "default:water_source" or
+	current_node.name == "default:water_flowing" or
+	current_node.name == "default:lava_source" or
+	current_node.name == "default:lava_flowing"
 	then
 		self.time_passed =  self.time_passed + dtime
 	else
