@@ -56,7 +56,7 @@ minetest.register_node("peaceful_npc:spawner_npc_def", {
 minetest.register_abm({
 	nodenames = {"peaceful_npc:spawner_npc_def"},
 	interval = 20,
-	chance = 1,
+	chance = 10,
 	action = function(pos)
 		npc_spawner(pos, "peaceful_npc:npc_def")
 	end,
@@ -107,7 +107,7 @@ minetest.register_node("peaceful_npc:spawner_npc_fast", {
 minetest.register_abm({
 	nodenames = {"peaceful_npc:spawner_npc_fast"},
 	interval = 30,
-	chance = 1,
+	chance = 10,
 	action = function(pos)
 		npc_spawner(pos, "peaceful_npc:npc_fast")
 	end,
@@ -158,7 +158,7 @@ minetest.register_node("peaceful_npc:spawner_npc_dwarf", {
 minetest.register_abm({
 	nodenames = {"peaceful_npc:spawner_npc_dwarf"},
 	interval = 60,
-	chance = 1,
+	chance = 10,
 	action = function(pos)
 		npc_spawner(pos, "peaceful_npc:npc_dwarf")
 	end,
