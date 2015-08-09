@@ -77,10 +77,10 @@ cavegen_biome = {
 }
 	
 --spawn definers
-plantslib:register_generate_plant(plaingen_biome, "def_spawn")
-plantslib:register_generate_plant(forestgen_biome, "def_spawn")
-plantslib:register_generate_plant(beachgen_biome, "fast_spawn")
-plantslib:register_generate_plant(desertgen_biome, "fast_spawn")
-plantslib:register_generate_plant(cavegen_biome, "dwarf_spawn")
+biome_lib:register_generate_plant(plaingen_biome, "def_spawn")
+biome_lib:register_generate_plant(forestgen_biome, "def_spawn")
+biome_lib:register_generate_plant(beachgen_biome, "fast_spawn")
+biome_lib:register_generate_plant(desertgen_biome, "fast_spawn")
+biome_lib:register_generate_plant(cavegen_biome, "dwarf_spawn")
 
 print("Peaceful NPC spawning.lua loaded! By jojoa1997!")
